@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Dayra Jefil · Engenheira de Software</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-dark: #0f0a0a;
+            --bg-card: #1a1010;
+            --bg-elevated: #241515;
+            --border: #3d2020;
+            --primary: #cc342d;
+            --primary-glow: #e87171;
+            --primary-dark: #a82420;
+            --text-light: #f5f0f0;
+            --text-muted: #a89090;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-elevated); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 12px; }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(15, 10, 10, 0.9);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(204, 52, 45, 0.2);
+            z-index: 1000; padding: 0.85rem 0;
+        }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
+        .logo {
+            font-weight: 700; font-size: 1.25rem;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-glow) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .nav-links { display: flex; gap: 1.3rem; align-items: center; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-glow); }
+        .btn-icon {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(204, 52, 45, 0.12); padding: 0.32rem 0.85rem;
+            border-radius: 40px; font-weight: 500; transition: all 0.2s;
+        }
+        .btn-icon:hover { background: var(--primary); color: white !important; }
+        .icon-svg { width: 16px; height: 16px; display: inline-block; vertical-align: middle; }
+
+        .lang-toggle {
+            background: rgba(204,52,45,0.08);
+            border: 1px solid rgba(204,52,45,0.3);
+            color: var(--primary-glow);
+            padding: 0.28rem 0.75rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .lang-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 6rem 0 4rem;
+            background: radial-gradient(circle at 8% 28%, rgba(204,52,45,0.10) 0%, transparent 60%),
+                        radial-gradient(circle at 88% 75%, rgba(168,36,32,0.06) 0%, transparent 50%);
+        }
+        .hero-content { max-width: 800px; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(204, 52, 45, 0.15);
+            padding: 0.3rem 1rem; border-radius: 40px;
+            font-size: 0.8rem; font-weight: 500; color: var(--primary-glow);
+            border: 1px solid rgba(204,52,45,0.3); margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-size: 3.8rem; font-weight: 800;
+            letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(to right, #fff, var(--primary-glow), #f9a8a8);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .hero-title { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 1rem; font-weight: 500; }
+        .hero-desc { font-size: 1.02rem; color: #d4c0c0; margin-bottom: 2rem; max-width: 90%; }
+        .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; margin-bottom: 2rem; }
+        .metric-card {
+            background: linear-gradient(135deg, #241515, #150a0a);
+            border-left: 3px solid var(--primary);
+            padding: 0.9rem 1.3rem; border-radius: 16px; min-width: 130px;
+        }
+        .metric-number { font-weight: 800; font-size: 1.8rem; color: var(--primary-glow); display: block; line-height: 1; }
+        .metric-label { font-size: 0.73rem; color: var(--text-muted); margin-top: 5px; }
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--primary); padding: 0.78rem 1.7rem;
+            border-radius: 40px; font-weight: 600; color: white;
+            text-decoration: none; transition: 0.2s; border: none; cursor: pointer; font-size: 0.93rem;
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 24px -6px rgba(204,52,45,0.5); }
+        .btn-outline {
+            border: 1px solid var(--border); background: transparent;
+            padding: 0.78rem 1.7rem; border-radius: 40px; font-weight: 600;
+            color: var(--text-light); text-decoration: none; transition: 0.2s; font-size: 0.93rem;
+        }
+        .btn-outline:hover { border-color: var(--primary); background: rgba(204,52,45,0.1); }
+
+        /* SECTIONS */
+        section { padding: 5rem 0; border-bottom: 1px solid rgba(61,32,32,0.4); }
+        .section-title {
+            font-size: 1.9rem; font-weight: 700; margin-bottom: 2.5rem;
+            letter-spacing: -0.3px; position: relative; display: inline-block;
+        }
+        .section-title:after {
+            content: ''; position: absolute; bottom: -10px; left: 0;
+            width: 50px; height: 3px; background: var(--primary); border-radius: 4px;
+        }
+
+        /* SOBRE */
+        .about-card {
+            background: var(--bg-elevated);
+            padding: 2rem 2.2rem; border-radius: 28px; line-height: 1.85;
+        }
+        .about-card p { margin-bottom: 1rem; font-size: 1rem; color: #d4c0c0; }
+        .about-card p:last-child { margin-bottom: 0; color: var(--text-muted); }
+
+        /* SKILLS */
+        .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+        .skill-category {
+            background: var(--bg-card); padding: 1.4rem; border-radius: 18px;
+            border: 1px solid rgba(61,32,32,0.6);
+        }
+        .skill-category h3 { margin-bottom: 0.9rem; font-size: 0.95rem; color: var(--primary-glow); }
+        .badge-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+        .skill-badge {
+            background: rgba(204, 52, 45, 0.1); padding: 0.22rem 0.8rem;
+            border-radius: 40px; font-size: 0.77rem; font-weight: 500;
+            transition: all 0.2s; border: 1px solid transparent; cursor: default;
+        }
+        .skill-badge:hover { background: var(--primary); color: white; transform: translateY(-1px); }
+
+        /* PROJECTS */
+        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.7rem; }
+        .project-card {
+            background: var(--bg-card); border-radius: 20px; padding: 1.6rem;
+            transition: all 0.25s ease; border: 1px solid var(--border); display: flex; flex-direction: column;
+        }
+        .project-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 20px 30px -15px rgba(0,0,0,0.6); }
+        .project-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .project-desc { font-size: 0.87rem; color: var(--text-muted); flex: 1; line-height: 1.65; }
+        .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.9rem 0 0.4rem; }
+        .tech-tag {
+            background: #241515; padding: 0.17rem 0.6rem; border-radius: 20px;
+            font-size: 0.7rem; font-weight: 500; color: var(--text-muted);
+        }
+        .coverage-badge {
+            font-size: 0.71rem;
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            display: inline-block; padding: 0.17rem 0.6rem;
+            border-radius: 20px; font-weight: 700; margin-top: 0.4rem;
+        }
+        .card-link {
+            margin-top: 1rem; display: inline-flex; align-items: center;
+            gap: 6px; color: var(--primary-glow); text-decoration: none;
+            font-weight: 500; font-size: 0.86rem; transition: color 0.2s;
+        }
+        .card-link:hover { color: white; }
+
+        .other-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .other-card {
+            background: var(--bg-elevated); border-radius: 14px; padding: 1.1rem 1.3rem;
+            border: 1px solid rgba(61,32,32,0.5); transition: all 0.2s;
+        }
+        .other-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .other-card-title { font-size: 0.93rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .other-card-desc { font-size: 0.79rem; color: var(--text-muted); }
+        .other-card-lang { font-size: 0.71rem; margin-top: 0.5rem; color: var(--primary-glow); }
+
+        /* EXPERIENCE */
+        .exp-item {
+            background: var(--bg-elevated); border-radius: 20px; padding: 1.7rem;
+            margin-bottom: 1.4rem; border: 1px solid rgba(61,32,32,0.4); transition: border-color 0.2s;
+        }
+        .exp-item:hover { border-color: rgba(204,52,45,0.3); }
+        .exp-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 0.5rem; }
+        .exp-company { font-size: 1.15rem; font-weight: 700; }
+        .exp-role { font-size: 0.86rem; color: var(--primary-glow); margin-top: 2px; }
+        .exp-date { color: var(--text-muted); font-size: 0.81rem; text-align: right; }
+        .exp-regime { font-size: 0.73rem; color: var(--text-muted); text-align: right; margin-top: 2px; }
+        .exp-list { padding-left: 1.3rem; color: #d4c0c0; margin-top: 0.8rem; }
+        .exp-list li { margin: 0.55rem 0; font-size: 0.88rem; line-height: 1.65; }
+        .exp-list li strong { color: var(--text-light); }
+        .exp-list code { background: rgba(204,52,45,0.15); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85em; }
+
+        /* EDUCATION */
+        .edu-grid { display: flex; flex-direction: column; gap: 0.9rem; }
+        .edu-card {
+            background: var(--bg-card); border-radius: 16px; padding: 1.1rem 1.4rem;
+            border: 1px solid rgba(61,32,32,0.5);
+            display: flex; align-items: center; gap: 1.5rem;
+        }
+        .edu-card-text { flex: 1; }
+        .edu-card h4 { font-size: 0.93rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .edu-card p { font-size: 0.81rem; color: var(--text-muted); }
+        .edu-period { font-size: 0.73rem; color: var(--primary-glow); margin-top: 0.4rem; }
+
+        .certs-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+        .cert-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-card); padding: 0.85rem 1.2rem; border-radius: 12px;
+            border: 1px solid rgba(61,32,32,0.4);
+        }
+        .cert-name { font-size: 0.86rem; font-weight: 500; }
+        .cert-hours { font-size: 0.77rem; color: var(--primary-glow); font-weight: 600; white-space: nowrap; margin-left: 1rem; }
+
+        /* CONTACT */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.4rem; }
+        .contact-card {
+            background: var(--bg-card); padding: 1.8rem 1.4rem;
+            border-radius: 22px; text-align: center; border: 1px solid rgba(61,32,32,0.5);
+            transition: all 0.2s;
+        }
+        .contact-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .contact-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+        .contact-card h4 { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 500; }
+        .contact-card a { font-size: 0.92rem; font-weight: 600; color: var(--primary-glow); text-decoration: none; }
+        .contact-card a:hover { color: white; }
+        .contact-value { font-size: 0.92rem; font-weight: 600; color: var(--primary-glow); }
+        .copy-email {
+            display: inline-block; margin-top: 0.6rem;
+            background: none; border: 1px solid var(--border);
+            padding: 0.28rem 0.85rem; border-radius: 40px;
+            color: var(--text-muted); cursor: pointer; font-size: 0.78rem;
+            transition: 0.2s; font-family: 'Inter', sans-serif;
+        }
+        .copy-email:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* FADE */
+        .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        footer { text-align: center; padding: 2.5rem; font-size: 0.77rem; color: var(--text-muted); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.4rem; }
+            .nav-container { flex-direction: column; }
+            .nav-links { justify-content: center; gap: 0.7rem; }
+            .hero-desc { max-width: 100%; }
+            .exp-date, .exp-regime { text-align: left; }
+            .metrics-row { grid-template-columns: repeat(2, 1fr); }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-container">
+        <div class="logo">Dayra Jefil</div>
+        <div class="nav-links">
+            <a href="#home"        class="nav-link" data-i18n="nav-home">Início</a>
+            <a href="#sobre"       class="nav-link" data-i18n="nav-about">Sobre</a>
+            <a href="#skills"      class="nav-link">Skills</a>
+            <a href="#projetos"    class="nav-link" data-i18n="nav-projects">Projetos</a>
+            <a href="#experiencia" class="nav-link" data-i18n="nav-experience">Experiência</a>
+            <a href="#formacao"    class="nav-link" data-i18n="nav-education">Formação</a>
+            <a href="#contato"     class="nav-link" data-i18n="nav-contact">Contato</a>
+            <a href="https://github.com/dayrajefil" target="_blank" class="btn-icon nav-link">
+                <svg class="icon-svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-.73.082-.73 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+            </a>
+            <a href="https://linkedin.com/in/dayrajefil" target="_blank" class="btn-icon nav-link">
+                <svg class="icon-svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.771-.773 1.771-1.729V1.729C24 .774 23.203 0 22.225 0z"/></svg>
+                LinkedIn
+            </a>
+            <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">EN</button>
+        </div>
+    </div>
+</nav>
+
+<main>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="container hero-content fade-up">
+            <div class="hero-badge" data-i18n="hero-badge">✦ Engenheira de Software · Ruby on Rails</div>
+            <h1>Dayra Jefil <span>R. Manicoba</span></h1>
+            <div class="hero-title">Backend Developer · Full Stack · Performance-Driven</div>
+            <p class="hero-desc" data-i18n="hero-desc">
+                Especialista Ruby on Rails desde 2021, com foco em backend e atuação full stack.
+                Entrego sistemas mais rápidos, testados e resilientes — de otimizações SQL drásticas
+                a arquiteturas baseadas em eventos com Sidekiq.
+            </p>
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <span class="metric-number">77,23%</span>
+                    <div class="metric-label" data-i18n="metric-query">redução no tempo de query</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-number">98,98%</span>
+                    <div class="metric-label" data-i18n="metric-coverage">cobertura de testes (RSpec)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-number">11</span>
+                    <div class="metric-label" data-i18n="metric-providers">providers de cache unificados</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-number">67</span>
+                    <div class="metric-label" data-i18n="metric-deliveries">entregas/mês (média)</div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <a href="#projetos" class="btn-primary" data-i18n="btn-projects">Ver projetos →</a>
+                <a href="#contato"  class="btn-outline" data-i18n="btn-talk">Vamos conversar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre">
+        <div class="container fade-up">
+            <h2 class="section-title" data-i18n="about-title">Sobre mim</h2>
+            <div class="about-card">
+                <p data-i18n="about-p1">
+                    Desenvolvedora Ruby on Rails desde 2021, com foco em backend e atuação full stack.
+                    Especialista em Rails 5–8, PostgreSQL, Redis, Sidekiq e Docker. Ao longo de mais de
+                    4 anos, atuei em sistemas de saúde, RH e e-commerce, entregando otimizações que impactam
+                    diretamente a experiência de milhares de usuários.
+                </p>
+                <p data-i18n="about-p2">
+                    Otimizei consultas SQL com redução de 77,23% no tempo de resposta, padronizei 11 providers
+                    de cache multi-tenant, migrei WebSockets manuais para ActionCable em 25+ arquivos e projetei
+                    arquitetura de importação assíncrona, idempotente e rastreável com Sidekiq.
+                    Pratico TDD com RSpec, Minitest e Capybara, e monitoro produção com Sentry, Grafana e Datadog.
+                </p>
+                <p data-i18n="about-p3">📍 Fortaleza, Ceará &nbsp;·&nbsp; 🇧🇷 Brasileira &nbsp;·&nbsp; 🗣️ Português (nativo) · Inglês (B1)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="container fade-up">
+            <h2 class="section-title">Tech Stack & Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 data-i18n="cat-langs">⚙️ Linguagens</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">Ruby</span>
+                        <span class="skill-badge">JavaScript / ES6</span>
+                        <span class="skill-badge">TypeScript</span>
+                        <span class="skill-badge">Python</span>
+                        <span class="skill-badge">Java</span>
+                        <span class="skill-badge">HTML · CSS</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 data-i18n="cat-frameworks">🚀 Frameworks</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">Ruby on Rails 5–8</span>
+                        <span class="skill-badge">Spring Boot</span>
+                        <span class="skill-badge">React</span>
+                        <span class="skill-badge">Angular</span>
+                        <span class="skill-badge">Backbone.js</span>
+                        <span class="skill-badge">Bootstrap · Tailwind</span>
+                        <span class="skill-badge">jQuery</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 data-i18n="cat-db">🗄️ Banco de Dados</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">PostgreSQL</span>
+                        <span class="skill-badge">MySQL</span>
+                        <span class="skill-badge">SQLite3</span>
+                        <span class="skill-badge">Redis</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>⚡ Backend & Async</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">Sidekiq</span>
+                        <span class="skill-badge">Action Cable</span>
+                        <span class="skill-badge">APIs RESTful</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 data-i18n="cat-tests">🧪 Testes & Qualidade</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">RSpec</span>
+                        <span class="skill-badge">Minitest</span>
+                        <span class="skill-badge">Capybara</span>
+                        <span class="skill-badge">TDD</span>
+                        <span class="skill-badge">Rubocop</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>☁️ DevOps & Infra</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">Docker</span>
+                        <span class="skill-badge">GitHub Actions</span>
+                        <span class="skill-badge">AWS</span>
+                        <span class="skill-badge">CI/CD</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 data-i18n="cat-obs">📡 Observabilidade</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">Sentry</span>
+                        <span class="skill-badge">Grafana</span>
+                        <span class="skill-badge">Datadog</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 data-i18n="cat-practices">📐 Boas Práticas</h3>
+                    <div class="badge-list">
+                        <span class="skill-badge">SOLID</span>
+                        <span class="skill-badge">Design Patterns</span>
+                        <span class="skill-badge">Clean Code</span>
+                        <span class="skill-badge">Code Review</span>
+                        <span class="skill-badge">Scrum · Agile</span>
+                        <span class="skill-badge">Kanban</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos">
+        <div class="container fade-up">
+            <h2 class="section-title" data-i18n="projects-title">Projetos em destaque</h2>
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <div class="project-title">cart-api</div>
+                    <p class="project-desc" data-i18n="proj-cart-desc">
+                        API de carrinho de compras com lógica de abandono: carrinhos inativos por 3h são marcados
+                        e removidos após 7 dias via job Sidekiq. Maior cobertura de testes dos meus projetos.
+                    </p>
+                    <div class="project-stack">
+                        <span class="tech-tag">Rails 7</span><span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Sidekiq</span><span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Docker</span><span class="tech-tag">RSpec</span>
+                    </div>
+                    <span class="coverage-badge">✓ 98,98% cobertura</span>
+                    <a href="https://github.com/dayrajefil/cart-api" target="_blank" class="card-link" data-i18n="github-link">Ver no GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-title">notify-hub</div>
+                    <p class="project-desc" data-i18n="proj-notify-desc">
+                        Sistema de notificações multi-canal (e-mail e WhatsApp via Twilio) com processamento
+                        assíncrono via Sidekiq. Suporte a múltiplos providers com fila resiliente.
+                    </p>
+                    <div class="project-stack">
+                        <span class="tech-tag">Rails 7</span><span class="tech-tag">Sidekiq</span>
+                        <span class="tech-tag">Redis</span><span class="tech-tag">Twilio</span>
+                        <span class="tech-tag">Docker</span><span class="tech-tag">RSpec</span>
+                    </div>
+                    <span class="coverage-badge">✓ 82,31% cobertura</span>
+                    <a href="https://github.com/dayrajefil/notify-hub" target="_blank" class="card-link" data-i18n="github-link">Ver no GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-title">inss-discount</div>
+                    <p class="project-desc" data-i18n="proj-inss-desc">
+                        Aplicação para cálculo e gestão de descontos do INSS com atualização de salário líquido
+                        em background via Sidekiq. Código limpo com Rubocop e alta cobertura de testes.
+                    </p>
+                    <div class="project-stack">
+                        <span class="tech-tag">Rails 7</span><span class="tech-tag">Sidekiq</span>
+                        <span class="tech-tag">Redis</span><span class="tech-tag">Rubocop</span>
+                        <span class="tech-tag">Docker</span><span class="tech-tag">RSpec</span>
+                    </div>
+                    <span class="coverage-badge">✓ 89,10% cobertura</span>
+                    <a href="https://github.com/dayrajefil/inss-discount" target="_blank" class="card-link" data-i18n="github-link">Ver no GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-title">courses-api + courses-frontend</div>
+                    <p class="project-desc" data-i18n="proj-courses-desc">
+                        Plataforma full stack para gerenciamento de cursos: API Rails com testes robustos e
+                        frontend em React/TypeScript com ChakraUI. Dois repositórios integrados.
+                    </p>
+                    <div class="project-stack">
+                        <span class="tech-tag">Rails 7</span><span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">React</span><span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">ChakraUI</span><span class="tech-tag">Docker</span>
+                    </div>
+                    <span class="coverage-badge">✓ 81,11% cobertura</span>
+                    <a href="https://github.com/dayrajefil/courses-api" target="_blank" class="card-link" data-i18n="github-link">Ver no GitHub →</a>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 2.5rem;">
+                <h3 style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 500;" data-i18n="other-repos-label">Outros repositórios</h3>
+                <div class="other-projects">
+                    <div class="other-card">
+                        <div class="other-card-title">tech_playground_api</div>
+                        <div class="other-card-desc" data-i18n="other-playground">Playground para experimentação de tecnologias backend com Rails.</div>
+                        <div class="other-card-lang">Ruby · Rails</div>
+                        <a href="https://github.com/dayrajefil/tech_playground_api" target="_blank" class="card-link" style="font-size: 0.79rem; margin-top: 0.5rem;" data-i18n="github-link">Ver no GitHub →</a>
+                    </div>
+                    <div class="other-card">
+                        <div class="other-card-title">angular-app-i</div>
+                        <div class="other-card-desc" data-i18n="other-angular">Aplicação frontend construída com Angular, explorando o ecossistema TypeScript.</div>
+                        <div class="other-card-lang">TypeScript · Angular</div>
+                        <a href="https://github.com/dayrajefil/angular-app-i" target="_blank" class="card-link" style="font-size: 0.79rem; margin-top: 0.5rem;" data-i18n="github-link">Ver no GitHub →</a>
+                    </div>
+                    <div class="other-card">
+                        <div class="other-card-title">SnakeGame</div>
+                        <div class="other-card-desc" data-i18n="other-snake">Implementação clássica do Snake em Python para estudo e diversão.</div>
+                        <div class="other-card-lang">Python</div>
+                        <a href="https://github.com/dayrajefil/SnakeGame" target="_blank" class="card-link" style="font-size: 0.79rem; margin-top: 0.5rem;" data-i18n="github-link">Ver no GitHub →</a>
+                    </div>
+                    <div class="other-card">
+                        <div class="other-card-title">DiscordBOT</div>
+                        <div class="other-card-desc" data-i18n="other-discord">Bot para Discord em Python com automações e comandos customizados.</div>
+                        <div class="other-card-lang">Python</div>
+                        <a href="https://github.com/dayrajefil/DiscordBOT" target="_blank" class="card-link" style="font-size: 0.79rem; margin-top: 0.5rem;" data-i18n="github-link">Ver no GitHub →</a>
+                    </div>
+                    <div class="other-card">
+                        <div class="other-card-title">CRUD-Java-SpringBoot</div>
+                        <div class="other-card-desc" data-i18n="other-java">API REST de gerenciamento de produtos e categorias com CRUD completo em Java e Spring Boot.</div>
+                        <div class="other-card-lang">Java · Spring Boot · PostgreSQL</div>
+                        <a href="https://github.com/dayrajefil/CRUD-Java-SpringBoot" target="_blank" class="card-link" style="font-size: 0.79rem; margin-top: 0.5rem;" data-i18n="github-link">Ver no GitHub →</a>
+                    </div>
+                    <div class="other-card">
+                        <div class="other-card-title">balancing_challenge</div>
+                        <div class="other-card-desc" data-i18n="other-balance">Sistema de balanceamento entre clientes e gestores com testes em Ruby e Python.</div>
+                        <div class="other-card-lang">Python · Ruby</div>
+                        <a href="https://github.com/dayrajefil/balancing_challenge" target="_blank" class="card-link" style="font-size: 0.79rem; margin-top: 0.5rem;" data-i18n="github-link">Ver no GitHub →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIÊNCIA -->
+    <section id="experiencia">
+        <div class="container fade-up">
+            <h2 class="section-title" data-i18n="exp-title">Trajetória Profissional</h2>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Nobe Sistemas</div>
+                        <div class="exp-role" data-i18n="role-dev">Desenvolvedora de Software</div>
+                    </div>
+                    <div>
+                        <div class="exp-date">Fev/2024 – <span data-i18n="date-current">Atual</span></div>
+                        <div class="exp-regime" data-i18n="regime-pj">Regime PJ</div>
+                    </div>
+                </div>
+                <ul class="exp-list" data-i18n="exp-nobe-list">
+                    <li>Manutenção e evolução de sistema legado no setor de saúde com alcance nacional, mantendo média de <strong>67 entregas/mês</strong> entre funcionalidades, correções e otimizações.</li>
+                    <li>Otimizei consultas SQL em PostgreSQL, conseguindo <strong>redução de 77,23% no tempo de consulta</strong>, resolvendo gargalos e elevando a eficiência geral do sistema.</li>
+                    <li>Padronizei <strong>11 providers</strong> do dashboard de acesso direto ao Redis para Rails.cache, reconstruindo chaves com escopo correto de tenant, unidade de saúde e período, corrigindo inconsistência que causava dados stale entre clientes.</li>
+                    <li>Substituí WebSocket manual por cliente ActionCable padronizado em <strong>25+ arquivos JavaScript</strong>, eliminando conexões duplicadas, extraindo módulo base para reuso e registrando eventos de conexão para diagnóstico em produção.</li>
+                    <li>Resolvi N+1 queries extraindo service dedicado com eager loading completo de associações aninhadas, memoizando chamadas repetidas e consolidando múltiplas atualizações em uma única query.</li>
+                    <li>Refatorei módulo de solicitação de exames eliminando 7 filtros e deduplicações em memória, substituindo por scopes SQL com <code>DISTINCT ON</code> cobertos por testes.</li>
+                    <li>Protegi endpoints paginados contra requisições arbitrariamente pesadas aplicando limite máximo de resultados por página em toda a API.</li>
+                    <li>Realizei migração de dados de sistema legado via acesso remoto, comparando schemas heterogêneos, criando tabelas temporárias para transformação e executando em três ambientes.</li>
+                    <li>Atuei como full stack em stack legada (Backbone.js, jQuery, YUI), integrando novas funcionalidades sem quebrar compatibilidade.</li>
+                    <li>Monitoramento contínuo com Datadog, contribuindo para maior confiabilidade e redução no tempo de resposta a incidentes.</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Pin People</div>
+                        <div class="exp-role" data-i18n="role-dev">Desenvolvedora de Software</div>
+                    </div>
+                    <div>
+                        <div class="exp-date">Jan/2025 – Jan/2026</div>
+                        <div class="exp-regime" data-i18n="regime-pj">Regime PJ</div>
+                    </div>
+                </div>
+                <ul class="exp-list" data-i18n="exp-pin-list">
+                    <li>Padronizei convenções de commits e branches do time, melhorando a organização e manutenção do histórico do projeto.</li>
+                    <li>Reestruturei o ambiente Docker para habilitar depuração e simplificar o setup, aproximando o contexto local do de produção.</li>
+                    <li>Aprimorei a visualização de logs em desenvolvimento com identificação de caminho e linha de execução de queries, acelerando análise de problemas.</li>
+                    <li>Corrigi bugs e realizei manutenções corretivas e evolutivas utilizando Sentry e Grafana para monitoramento.</li>
+                    <li>Corrigi testes intermitentes, eliminando falsos positivos e negativos e aumentando a confiabilidade da suite de testes.</li>
+                    <li><strong>Projeto chave — Reestruturação do fluxo de importação de dados:</strong> modelei nova arquitetura baseada em eventos com documentação completa (fluxogramas, responsabilidades). O novo fluxo — cada etapa concluída dispara a próxima de forma assíncrona — eliminou o gargalo de arquivos grandes. Implementei paralelismo e idempotência com Sidekiq, garantindo retomada transparente em falhas e rastreabilidade completa com histórico de tentativas e suporte a auditoria.</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Imaginedone</div>
+                        <div class="exp-role" data-i18n="role-dev">Desenvolvedora de Software</div>
+                    </div>
+                    <div>
+                        <div class="exp-date">Mai/2022 – Jun/2023</div>
+                        <div class="exp-regime" data-i18n="regime-clt">Regime CLT</div>
+                    </div>
+                </div>
+                <ul class="exp-list" data-i18n="exp-ima-list">
+                    <li>Corrigi bugs e realizei deploys seguros em sistema de gestão de projetos monolítico em Ruby on Rails.</li>
+                    <li>Contribuí com funcionalidades de interface em JavaScript e React.</li>
+                    <li>Melhorei a performance do sistema aplicando boas práticas de codificação e code reviews focados em qualidade.</li>
+                    <li>Ampliei a cobertura de testes com RSpec e testes de interface com Capybara.</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-company">Brasil System</div>
+                        <div class="exp-role" data-i18n="role-dev">Desenvolvedora de Software</div>
+                    </div>
+                    <div>
+                        <div class="exp-date">Ago/2021 – Mai/2022</div>
+                        <div class="exp-regime" data-i18n="regime-part">Contrato Meio Período</div>
+                    </div>
+                </div>
+                <ul class="exp-list" data-i18n="exp-brasil-list">
+                    <li>Desenvolvi módulo de gerenciamento de vendas e estoque integrado ao sistema existente (setor de smartphones) com Ruby on Rails.</li>
+                    <li>Apliquei Clean Code e Orientação a Objetos na refatoração do código, promovendo manutenção e eficiência.</li>
+                    <li>Entreguei novas funcionalidades e correções de forma contínua em sistema de vendas, clientes e controle de estoque.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMAÇÃO -->
+    <section id="formacao">
+        <div class="container fade-up">
+            <h2 class="section-title" data-i18n="edu-title">Formação & Certificações</h2>
+            <div class="edu-grid" style="margin-bottom: 2.5rem;">
+                <div class="edu-card">
+                    <div class="edu-card-text">
+                        <h4 data-i18n="edu-eng-name">🎓 Engenharia da Computação</h4>
+                        <p>Uniamerica</p>
+                    </div>
+                    <div class="edu-period">2023 – 2027</div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-text">
+                        <h4 data-i18n="edu-fis-name">📚 Bacharelado em Física</h4>
+                        <p data-i18n="edu-fis-inst">UFC (trancado)</p>
+                    </div>
+                    <div class="edu-period">2021 – 2023</div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-text">
+                        <h4 data-i18n="edu-tec-name">📦 Técnico em Logística</h4>
+                        <p>EEEP Paulo VI</p>
+                    </div>
+                    <div class="edu-period">2017 – 2019</div>
+                </div>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary-glow);" data-i18n="certs-title">Cursos & Certificações</h3>
+            <div class="certs-list">
+                <div class="cert-item"><span class="cert-name" data-i18n="cert1">Cloud Platform — Uniamerica</span><span class="cert-hours">240h</span></div>
+                <div class="cert-item"><span class="cert-name" data-i18n="cert2">Smart Data Structure — Uniamerica</span><span class="cert-hours">240h</span></div>
+                <div class="cert-item"><span class="cert-name" data-i18n="cert3">Desenvolvimento Orientado a Objeto — Uniamerica</span><span class="cert-hours">240h</span></div>
+                <div class="cert-item"><span class="cert-name" data-i18n="cert4">DB Developer — Uniamerica</span><span class="cert-hours">160h</span></div>
+                <div class="cert-item"><span class="cert-name" data-i18n="cert5">Ruby on Rails 5.x — Do início ao fim! — Udemy</span><span class="cert-hours">48h</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato">
+        <div class="container fade-up">
+            <h2 class="section-title" data-i18n="contact-title">Vamos conectar</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h4 data-i18n="contact-email-label">E-mail</h4>
+                    <div class="contact-value">dayrajefil@gmail.com</div>
+                    <button class="copy-email" id="copy-btn" onclick="copyEmail()" data-i18n="copy-btn">Copiar e-mail</button>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">💼</div>
+                    <h4>LinkedIn</h4>
+                    <a href="https://linkedin.com/in/dayrajefil" target="_blank">linkedin.com/in/dayrajefil</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🐙</div>
+                    <h4>GitHub</h4>
+                    <a href="https://github.com/dayrajefil" target="_blank">github.com/dayrajefil</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h4 data-i18n="contact-location-label">Localização</h4>
+                    <div class="contact-value" style="font-size: 0.88rem;" data-i18n="contact-location-value">Fortaleza, Ceará · Brasil</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <span data-i18n="footer">© 2025 Dayra Jefil R. Manicoba · Engenheira de Software</span>
+</footer>
+
+<script>
+const translations = {
+  pt: {
+    'nav-home': 'Início',
+    'nav-about': 'Sobre',
+    'nav-projects': 'Projetos',
+    'nav-experience': 'Experiência',
+    'nav-education': 'Formação',
+    'nav-contact': 'Contato',
+    'hero-badge': '✦ Engenheira de Software · Ruby on Rails',
+    'hero-desc': 'Especialista Ruby on Rails desde 2021, com foco em backend e atuação full stack. Entrego sistemas mais rápidos, testados e resilientes — de otimizações SQL drásticas a arquiteturas baseadas em eventos com Sidekiq.',
+    'metric-query': 'redução no tempo de query',
+    'metric-coverage': 'cobertura de testes (RSpec)',
+    'metric-providers': 'providers de cache unificados',
+    'metric-deliveries': 'entregas/mês (média)',
+    'btn-projects': 'Ver projetos →',
+    'btn-talk': 'Vamos conversar',
+    'about-title': 'Sobre mim',
+    'about-p1': 'Desenvolvedora Ruby on Rails desde 2021, com foco em backend e atuação full stack. Especialista em Rails 5–8, PostgreSQL, Redis, Sidekiq e Docker. Ao longo de mais de 4 anos, atuei em sistemas de saúde, RH e e-commerce, entregando otimizações que impactam diretamente a experiência de milhares de usuários.',
+    'about-p2': 'Otimizei consultas SQL com redução de 77,23% no tempo de resposta, padronizei 11 providers de cache multi-tenant, migrei WebSockets manuais para ActionCable em 25+ arquivos e projetei arquitetura de importação assíncrona, idempotente e rastreável com Sidekiq. Pratico TDD com RSpec, Minitest e Capybara, e monitoro produção com Sentry, Grafana e Datadog.',
+    'about-p3': '📍 Fortaleza, Ceará &nbsp;·&nbsp; 🇧🇷 Brasileira &nbsp;·&nbsp; 🗣️ Português (nativo) · Inglês (B1)',
+    'cat-langs': '⚙️ Linguagens',
+    'cat-frameworks': '🚀 Frameworks',
+    'cat-db': '🗄️ Banco de Dados',
+    'cat-tests': '🧪 Testes & Qualidade',
+    'cat-obs': '📡 Observabilidade',
+    'cat-practices': '📐 Boas Práticas',
+    'projects-title': 'Projetos em destaque',
+    'proj-cart-desc': 'API de carrinho de compras com lógica de abandono: carrinhos inativos por 3h são marcados e removidos após 7 dias via job Sidekiq. Maior cobertura de testes dos meus projetos.',
+    'proj-notify-desc': 'Sistema de notificações multi-canal (e-mail e WhatsApp via Twilio) com processamento assíncrono via Sidekiq. Suporte a múltiplos providers com fila resiliente.',
+    'proj-inss-desc': 'Aplicação para cálculo e gestão de descontos do INSS com atualização de salário líquido em background via Sidekiq. Código limpo com Rubocop e alta cobertura de testes.',
+    'proj-courses-desc': 'Plataforma full stack para gerenciamento de cursos: API Rails com testes robustos e frontend em React/TypeScript com ChakraUI. Dois repositórios integrados.',
+    'proj-java-desc': 'API REST de gerenciamento de produtos e categorias com operações CRUD completas em Java com Spring Boot e PostgreSQL. Exploração do ecossistema Java.',
+    'proj-balance-desc': 'Sistema de balanceamento entre clientes e gestores com testes em Ruby e Python. Desafio técnico explorando algoritmos de distribuição equitativa.',
+    'github-link': 'Ver no GitHub →',
+    'other-repos-label': 'Outros repositórios',
+    'other-playground': 'Playground para experimentação de tecnologias backend com Rails.',
+    'other-angular': 'Aplicação frontend construída com Angular, explorando o ecossistema TypeScript.',
+    'other-snake': 'Implementação clássica do Snake em Python para estudo e diversão.',
+    'other-discord': 'Bot para Discord em Python com automações e comandos customizados.',
+    'other-balance': 'Sistema de balanceamento entre clientes e gestores com testes em Ruby e Python.',
+    'other-java': 'API REST de gerenciamento de produtos e categorias com CRUD completo em Java e Spring Boot.',
+    'exp-title': 'Trajetória Profissional',
+    'role-dev': 'Desenvolvedora de Software',
+    'date-current': 'Atual',
+    'regime-pj': 'Regime PJ',
+    'regime-clt': 'Regime CLT',
+    'regime-part': 'Contrato Meio Período',
+    'exp-nobe-list': `<li>Manutenção e evolução de sistema legado no setor de saúde com alcance nacional, mantendo média de <strong>67 entregas/mês</strong> entre funcionalidades, correções e otimizações.</li><li>Otimizei consultas SQL em PostgreSQL, conseguindo <strong>redução de 77,23% no tempo de consulta</strong>, resolvendo gargalos e elevando a eficiência geral do sistema.</li><li>Padronizei <strong>11 providers</strong> do dashboard de acesso direto ao Redis para Rails.cache, reconstruindo chaves com escopo correto de tenant, unidade de saúde e período, corrigindo inconsistência que causava dados stale entre clientes.</li><li>Substituí WebSocket manual por cliente ActionCable padronizado em <strong>25+ arquivos JavaScript</strong>, eliminando conexões duplicadas, extraindo módulo base para reuso e registrando eventos de conexão para diagnóstico em produção.</li><li>Resolvi N+1 queries extraindo service dedicado com eager loading completo de associações aninhadas, memoizando chamadas repetidas e consolidando múltiplas atualizações em uma única query.</li><li>Refatorei módulo de solicitação de exames eliminando 7 filtros e deduplicações em memória, substituindo por scopes SQL com <code>DISTINCT ON</code> cobertos por testes.</li><li>Protegi endpoints paginados contra requisições arbitrariamente pesadas aplicando limite máximo de resultados por página em toda a API.</li><li>Realizei migração de dados de sistema legado via acesso remoto, comparando schemas heterogêneos, criando tabelas temporárias para transformação e executando em três ambientes.</li><li>Atuei como full stack em stack legada (Backbone.js, jQuery, YUI), integrando novas funcionalidades sem quebrar compatibilidade.</li><li>Monitoramento contínuo com Datadog, contribuindo para maior confiabilidade e redução no tempo de resposta a incidentes.</li>`,
+    'exp-pin-list': `<li>Padronizei convenções de commits e branches do time, melhorando a organização e manutenção do histórico do projeto.</li><li>Reestruturei o ambiente Docker para habilitar depuração e simplificar o setup, aproximando o contexto local do de produção.</li><li>Aprimorei a visualização de logs em desenvolvimento com identificação de caminho e linha de execução de queries, acelerando análise de problemas.</li><li>Corrigi bugs e realizei manutenções corretivas e evolutivas utilizando Sentry e Grafana para monitoramento.</li><li>Corrigi testes intermitentes, eliminando falsos positivos e negativos e aumentando a confiabilidade da suite de testes.</li><li><strong>Projeto chave — Reestruturação do fluxo de importação de dados:</strong> modelei nova arquitetura baseada em eventos com documentação completa (fluxogramas, responsabilidades). O novo fluxo — cada etapa concluída dispara a próxima de forma assíncrona — eliminou o gargalo de arquivos grandes. Implementei paralelismo e idempotência com Sidekiq, garantindo retomada transparente em falhas e rastreabilidade completa com histórico de tentativas e suporte a auditoria.</li>`,
+    'exp-ima-list': `<li>Corrigi bugs e realizei deploys seguros em sistema de gestão de projetos monolítico em Ruby on Rails.</li><li>Contribuí com funcionalidades de interface em JavaScript e React.</li><li>Melhorei a performance do sistema aplicando boas práticas de codificação e code reviews focados em qualidade.</li><li>Ampliei a cobertura de testes com RSpec e testes de interface com Capybara.</li>`,
+    'exp-brasil-list': `<li>Desenvolvi módulo de gerenciamento de vendas e estoque integrado ao sistema existente (setor de smartphones) com Ruby on Rails.</li><li>Apliquei Clean Code e Orientação a Objetos na refatoração do código, promovendo manutenção e eficiência.</li><li>Entreguei novas funcionalidades e correções de forma contínua em sistema de vendas, clientes e controle de estoque.</li>`,
+    'edu-title': 'Formação & Certificações',
+    'edu-eng-name': '🎓 Engenharia da Computação',
+    'edu-fis-name': '📚 Bacharelado em Física',
+    'edu-fis-inst': 'UFC (trancado)',
+    'edu-tec-name': '📦 Técnico em Logística',
+    'certs-title': 'Cursos & Certificações',
+    'cert1': 'Cloud Platform — Uniamerica',
+    'cert2': 'Smart Data Structure — Uniamerica',
+    'cert3': 'Desenvolvimento Orientado a Objeto — Uniamerica',
+    'cert4': 'DB Developer — Uniamerica',
+    'cert5': 'Ruby on Rails 5.x — Do início ao fim! — Udemy',
+    'contact-title': 'Vamos conectar',
+    'contact-email-label': 'E-mail',
+    'contact-location-label': 'Localização',
+    'contact-location-value': 'Fortaleza, Ceará · Brasil',
+    'copy-btn': 'Copiar e-mail',
+    'copy-done': 'Copiado!',
+    'footer': '© 2025 Dayra Jefil R. Manicoba · Engenheira de Software',
+  },
+  en: {
+    'nav-home': 'Home',
+    'nav-about': 'About',
+    'nav-projects': 'Projects',
+    'nav-experience': 'Experience',
+    'nav-education': 'Education',
+    'nav-contact': 'Contact',
+    'hero-badge': '✦ Software Engineer · Ruby on Rails',
+    'hero-desc': 'Ruby on Rails specialist since 2021, focused on backend with full stack experience. I deliver faster, tested and resilient systems — from drastic SQL optimizations to event-driven architectures with Sidekiq.',
+    'metric-query': 'query time reduction',
+    'metric-coverage': 'test coverage (RSpec)',
+    'metric-providers': 'unified cache providers',
+    'metric-deliveries': 'deliveries/month (avg)',
+    'btn-projects': 'See projects →',
+    'btn-talk': "Let's talk",
+    'about-title': 'About me',
+    'about-p1': 'Ruby on Rails developer since 2021, focused on backend with full stack experience. Specialist in Rails 5–8, PostgreSQL, Redis, Sidekiq and Docker. Over 4+ years I have worked on healthcare, HR and e-commerce systems, delivering optimizations that directly impact thousands of users.',
+    'about-p2': 'I optimized SQL queries achieving a 77.23% reduction in response time, standardized 11 multi-tenant cache providers, migrated manual WebSockets to ActionCable across 25+ files, and designed an asynchronous, idempotent and traceable data import architecture with Sidekiq. I practice TDD with RSpec, Minitest and Capybara, and monitor production with Sentry, Grafana and Datadog.',
+    'about-p3': '📍 Fortaleza, Ceará &nbsp;·&nbsp; 🇧🇷 Brazilian &nbsp;·&nbsp; 🗣️ Portuguese (native) · English (B1)',
+    'cat-langs': '⚙️ Languages',
+    'cat-frameworks': '🚀 Frameworks',
+    'cat-db': '🗄️ Databases',
+    'cat-tests': '🧪 Testing & Quality',
+    'cat-obs': '📡 Observability',
+    'cat-practices': '📐 Best Practices',
+    'projects-title': 'Featured Projects',
+    'proj-cart-desc': 'Shopping cart API with abandonment logic: carts inactive for 3h are flagged and removed after 7 days via Sidekiq job. Highest test coverage among my projects.',
+    'proj-notify-desc': 'Multi-channel notification system (email and WhatsApp via Twilio) with asynchronous processing via Sidekiq. Supports multiple providers with a resilient queue.',
+    'proj-inss-desc': 'Application for calculating and managing social security (INSS) discounts with background net salary update via Sidekiq. Clean code with Rubocop and high test coverage.',
+    'proj-courses-desc': 'Full stack course management platform: Rails API with robust tests and React/TypeScript frontend with ChakraUI. Two integrated repositories.',
+    'proj-java-desc': 'REST API for product and category management with full CRUD operations in Java with Spring Boot and PostgreSQL. Exploration of the Java ecosystem.',
+    'proj-balance-desc': 'Client-manager balancing system with tests in Ruby and Python. Technical challenge exploring equitable distribution algorithms.',
+    'github-link': 'View on GitHub →',
+    'other-repos-label': 'Other repositories',
+    'other-playground': 'Playground for experimenting with backend technologies using Rails.',
+    'other-angular': 'Frontend application built with Angular, exploring the TypeScript ecosystem.',
+    'other-snake': 'Classic Snake implementation in Python for study and fun.',
+    'other-discord': 'Discord bot in Python with automation and custom commands.',
+    'other-balance': 'Client-manager balancing system with tests in Ruby and Python.',
+    'other-java': 'REST API for product and category management with full CRUD in Java and Spring Boot.',
+    'exp-title': 'Professional Experience',
+    'role-dev': 'Software Developer',
+    'date-current': 'Present',
+    'regime-pj': 'PJ Contract',
+    'regime-clt': 'CLT Employment',
+    'regime-part': 'Part-time Contract',
+    'exp-nobe-list': `<li>Maintenance and evolution of a legacy system in the nationwide healthcare sector, averaging <strong>67 deliveries/month</strong> across features, fixes and optimizations.</li><li>Optimized SQL queries in PostgreSQL, achieving a <strong>77.23% reduction in query time</strong>, resolving bottlenecks and raising overall system efficiency.</li><li>Standardized <strong>11 providers</strong> from direct Redis access to Rails.cache, rebuilding keys with correct tenant, health unit and period scope, fixing cache inconsistencies that caused stale data between clients.</li><li>Replaced manual WebSocket with standardized ActionCable client across <strong>25+ JavaScript files</strong>, eliminating duplicate connections, extracting a base module for reuse and logging connection events for production diagnostics.</li><li>Resolved N+1 queries by extracting a dedicated service with full eager loading of nested associations, memoizing repeated calls and consolidating multiple updates into a single query.</li><li>Refactored the exam request module by removing 7 in-memory filters and deduplication steps, replacing them with SQL scopes using <code>DISTINCT ON</code>, covered by tests.</li><li>Protected paginated endpoints against arbitrarily heavy requests by enforcing a maximum results-per-page limit across the entire API.</li><li>Performed data migration from a legacy client system via remote access, comparing heterogeneous schemas, creating temporary tables for transformation and executing across three environments.</li><li>Worked full stack on a legacy stack (Backbone.js, jQuery, YUI), integrating new features without breaking existing compatibility.</li><li>Continuous monitoring with Datadog, contributing to greater reliability and faster incident response times.</li>`,
+    'exp-pin-list': `<li>Standardized commit and branch conventions for the team, improving code organization and project history maintenance.</li><li>Restructured the Docker environment to enable debugging and simplify setup, bringing the local context closer to production.</li><li>Enhanced log visualization in development with query path and execution line identification, speeding up problem analysis.</li><li>Fixed bugs and performed corrective and evolutionary maintenance using Sentry and Grafana for monitoring.</li><li>Fixed intermittent tests, eliminating false positives and negatives and increasing the reliability of the test suite.</li><li><strong>Key project — Data import flow restructuring:</strong> designed a new event-driven architecture with complete documentation (flowcharts, responsibilities). The new flow — each completed step asynchronously triggers the next — eliminated the large-file bottleneck. Implemented parallelism and idempotency with Sidekiq, ensuring transparent resumption on failure and full traceability with attempt history and audit support.</li>`,
+    'exp-ima-list': `<li>Fixed bugs and performed safe deployments on a monolithic project management system in Ruby on Rails.</li><li>Contributed interface features in JavaScript and React.</li><li>Improved system performance by applying coding best practices and quality-focused code reviews.</li><li>Expanded test coverage with RSpec and interface tests with Capybara.</li>`,
+    'exp-brasil-list': `<li>Developed a sales and inventory management module integrated into the existing system (smartphone sector) with Ruby on Rails.</li><li>Applied Clean Code and Object-Oriented principles in code refactoring, promoting maintainability and efficiency.</li><li>Continuously delivered new features and fixes to a sales, customer and inventory control system.</li>`,
+    'edu-title': 'Education & Certifications',
+    'edu-eng-name': '🎓 Computer Engineering',
+    'edu-fis-name': '📚 Physics Bachelor\'s',
+    'edu-fis-inst': 'UFC (on hold)',
+    'edu-tec-name': '📦 Technical Degree in Logistics',
+    'certs-title': 'Courses & Certifications',
+    'cert1': 'Cloud Platform — Uniamerica',
+    'cert2': 'Smart Data Structure — Uniamerica',
+    'cert3': 'Object-Oriented Development — Uniamerica',
+    'cert4': 'DB Developer — Uniamerica',
+    'cert5': 'Ruby on Rails 5.x — From scratch! — Udemy',
+    'contact-title': "Let's connect",
+    'contact-email-label': 'Email',
+    'contact-location-label': 'Location',
+    'contact-location-value': 'Fortaleza, Ceará · Brazil',
+    'copy-btn': 'Copy email',
+    'copy-done': 'Copied!',
+    'footer': '© 2025 Dayra Jefil R. Manicoba · Software Engineer',
+  }
+};
+
+let currentLang = 'pt';
+
+function toggleLang() {
+    currentLang = currentLang === 'pt' ? 'en' : 'pt';
+    applyLang();
+}
+
+function applyLang() {
+    document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+    document.getElementById('lang-toggle').textContent = currentLang === 'pt' ? 'EN' : 'PT';
+    const t = translations[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+}
+
+// Scroll suave
+document.querySelectorAll('.nav-link').forEach(a => {
+    a.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        e.preventDefault();
+        const target = document.getElementById(href.substring(1));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+
+// Nav ativo
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (pageYOffset >= s.offsetTop - 130) current = s.id; });
+    navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === `#${current}`) a.classList.add('active');
+    });
+});
+
+// Fade-in nos dois sentidos
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.add('visible');
+        } else {
+            e.target.classList.remove('visible');
+        }
+    });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(f => observer.observe(f));
+
+// Copiar email
+window.copyEmail = function() {
+    navigator.clipboard.writeText('dayrajefil@gmail.com').then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = translations[currentLang]['copy-done'];
+        setTimeout(() => { btn.textContent = translations[currentLang]['copy-btn']; }, 2000);
+    });
+};
+</script>
+
+</body>
+</html>
